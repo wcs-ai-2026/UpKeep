@@ -1,0 +1,86 @@
+- time_stamp: Time of the reading.
+- asset_id: Turbine number.
+- id: Reading number.
+- train_test: Training or prediction period.
+- status_type_id: Turbine operating status.
+- sensor_0_avg: Average outside air temperature.
+- sensor_1_avg: Average wind direction.
+- sensor_2_avg: Average wind direction relative to the turbine.
+- wind_speed_3_avg: Average measured wind speed.
+- wind_speed_4_avg: Average estimated wind speed.
+- wind_speed_3_max: Highest measured wind speed.
+- wind_speed_3_min: Lowest measured wind speed.
+- wind_speed_3_std: Spread of measured wind speeds.
+- sensor_5_avg: Average blade angle.
+- sensor_5_max: Highest blade angle.
+- sensor_5_min: Lowest blade angle.
+- sensor_5_std: Spread of blade angles.
+- sensor_6_avg: Average hub controller temperature.
+- sensor_7_avg: Average top nacelle controller temperature.
+- sensor_8_avg: Average choke coil temperature.
+- sensor_9_avg: Average VCP circuit board temperature.
+- sensor_10_avg: Average VCS cooling water temperature.
+- sensor_11_avg: Average gearbox high-speed bearing temperature.
+- sensor_12_avg: Average gearbox oil temperature.
+- sensor_13_avg: Average generator drive-end bearing temperature.
+- sensor_14_avg: Average generator non-drive-end bearing temperature.
+- sensor_15_avg: Average generator phase 1 winding temperature.
+- sensor_16_avg: Average generator phase 2 winding temperature.
+- sensor_17_avg: Average generator phase 3 winding temperature.
+- sensor_18_avg: Average generator rotation speed.
+- sensor_18_max: Highest generator rotation speed.
+- sensor_18_min: Lowest generator rotation speed.
+- sensor_18_std: Spread of generator rotation speeds.
+- sensor_19_avg: Average slip ring chamber temperature.
+- sensor_20_avg: Average busbar section temperature.
+- sensor_21_avg: Average grid-side inverter driver temperature.
+- sensor_22_avg: Average phase offset between voltage and current.
+- sensor_23_avg: Average phase 1 current.
+- sensor_24_avg: Average phase 2 current.
+- sensor_25_avg: Average phase 3 current.
+- sensor_26_avg: Average grid electrical frequency.
+- reactive_power_27_avg: Average available capacitive reactive power.
+- reactive_power_27_max: Highest available capacitive reactive power.
+- reactive_power_27_min: Lowest available capacitive reactive power.
+- reactive_power_27_std: Spread of available capacitive reactive power.
+- reactive_power_28_avg: Average available inductive reactive power.
+- reactive_power_28_max: Highest available inductive reactive power.
+- reactive_power_28_min: Lowest available inductive reactive power.
+- reactive_power_28_std: Spread of available inductive reactive power.
+- power_29_avg: Average available grid power.
+- power_29_max: Highest available grid power.
+- power_29_min: Lowest available grid power.
+- power_29_std: Spread of available grid power.
+- power_30_avg: Average power sent to the grid.
+- power_30_max: Highest power sent to the grid.
+- power_30_min: Lowest power sent to the grid.
+- power_30_std: Spread of power sent to the grid.
+- sensor_31_avg: Average grid reactive power.
+- sensor_31_max: Highest grid reactive power.
+- sensor_31_min: Lowest grid reactive power.
+- sensor_31_std: Spread of grid reactive power.
+- sensor_32_avg: Average phase 1 voltage.
+- sensor_33_avg: Average phase 2 voltage.
+- sensor_34_avg: Average phase 3 voltage.
+- sensor_35_avg: Average rotor-side phase 1 inverter driver temperature.
+- sensor_36_avg: Average rotor-side phase 2 inverter driver temperature.
+- sensor_37_avg: Average rotor-side phase 3 inverter driver temperature.
+- sensor_38_avg: Average transformer phase 1 temperature.
+- sensor_39_avg: Average transformer phase 2 temperature.
+- sensor_40_avg: Average transformer phase 3 temperature.
+- sensor_41_avg: Average hydraulic oil temperature.
+- sensor_42_avg: Average direction the turbine housing faces.
+- sensor_43_avg: Average temperature inside the turbine housing.
+- sensor_44: Accumulated active energy with the generator disconnected.
+- sensor_45: Accumulated active energy with the generator in delta mode.
+- sensor_46: Accumulated active energy with the generator in star mode.
+- sensor_47: Accumulated reactive energy with the generator disconnected.
+- sensor_48: Accumulated reactive energy with the generator in delta mode.
+- sensor_49: Accumulated reactive energy with the generator in star mode.
+- sensor_50: Total accumulated active energy.
+- sensor_51: Total accumulated reactive energy.
+- sensor_52_avg: Average rotor rotation speed.
+- sensor_52_max: Highest rotor rotation speed.
+- sensor_52_min: Lowest rotor rotation speed.
+- sensor_52_std: Spread of rotor rotation speeds.
+- sensor_53_avg: Average nose cone temperature.

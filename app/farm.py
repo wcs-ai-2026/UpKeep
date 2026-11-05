@@ -1,0 +1,125 @@
+import streamlit as st
+import pandas as pd
+
+# Page configuration
+st.set_page_config(
+    page_title="Upkeep | Wind Farm A",
+    page_icon="🌬️",
+    layout="wide"
+)
+
+# Simulated turbine data
+# This will be replaced with the team's data later
+turbines = [
+    {"id": "A-T1", "health": "green", "score": 0.96},
+    {"id": "A-T2", "health": "green", "score": 0.91},
+    {"id": "A-T3", "health": "yellow", "score": 0.64},
+    {"id": "A-T4", "health": "red", "score": 0.22},
+    {"id": "A-T5", "health": "green", "score": 0.89},
+]
+
+# Health status colours
+status_colors = {
+    "green": "#22C55E",
+    "yellow": "#FACC15",
+    "red": "#EF4444"
+}
+
+status_icons = {
+    "green": "🟢",
+    "yellow": "🟡",
+    "red": "🔴"
+}
+
+# Header
+st.title("Upkeep | Wind Farm A")
+st.write("Wind Turbine Health Monitoring")
+st.caption("Prototype | Simulated turbine data")
+
+st.divider()
+
+# Wind farm summary
+st.subheader("Wind Farm Overview")
+
+df = pd.DataFrame(turbines)
+
+healthy = (df["health"] == "green").sum()
+warning = (df["health"] == "yellow").sum()
+critical = (df["health"] == "red").sum()
+
+col1, col2, col3, col4 = st.columns(4)
+
+col1.metric("Total Turbines", len(turbines))
+col2.metric("Healthy", int(healthy))
+col3.metric("Warning", int(warning))
+col4.metric("Critical", int(critical))
+
+st.divider()
+
+# Turbine status section
+st.subheader("Turbine Status")
+
+columns = st.columns(5, gap="medium")
+
+for column, turbine in zip(columns, turbines):
+    with column:
+        turbine_id = turbine["id"]
+        health = turbine["health"]
+        score = turbine["score"]
+
+        color = status_colors[health]
+        icon = status_icons[health]
+
+        st.subheader(turbine_id)
+
+        st.write(
+            f"{icon} {health.upper()}"
+        )
+
+        st.metric(
+            "Health Score",
+            f"{score:.0%}"
+        )
+
+        # Custom coloured progress bar
+        # Uses HTML and CSS for individual turbine colours
+        st.markdown(
+            f"""
+            <div style="
+                width: 100%;
+                height: 12px;
+                background-color: #30343F;
+                border-radius: 8px;
+                overflow: hidden;
+            ">
+                <div style="
+                    width: {score * 100}%;
+                    height: 100%;
+                    background-color: {color};
+                    border-radius: 8px;
+                "></div>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+st.divider()
+
+# Additional turbine data table
+st.subheader("Turbine Health Data")
+
+st.dataframe(
+    df.rename(
+        columns={
+            "id": "Turbine ID",
+            "health": "Health Status",
+            "score": "Health Score"
+        }
+    ),
+    hide_index=True,
+    use_container_width=True
+)
+
+st.caption(
+    "Upkeep | Western Cyber Society | Demo Dashboard"
+)

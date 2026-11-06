@@ -46,12 +46,12 @@ def make_features(df):
     return df
 
 
-#dataset 0: Generator bearing fault 
+#Dataset 0: Generator bearing fault Dataset 10: Gearbox Failure, Dataset 25: Healthy
 for dataset_name in ["0", "10", "25"]:
     df = load_data("Data/datasets/" + dataset_name + ".csv")
     df = clean_data(df)
     df = make_features(df)
-    df.to_csv("Data/datasets/" + dataset_name + "_cln.csv", sep=";", index=False)
+    df.to_csv("Data/cln/" + dataset_name + "_cln.csv", sep=";", index=False)
     print(dataset_name + "_cln.csv saved with", len(df), "rows")
 
 

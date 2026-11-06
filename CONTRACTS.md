@@ -1,33 +1,35 @@
-
 # Upkeep Code Contracts
 
 This document explains how the different parts of Upkeep communicate with each other. Everyone should follow these formats so the components can work together.
 
-1. Reading Format
+## 1. Reading Format
 
 **Owner:** Everyone
 
 Each reading represents one 10-minute sensor reading from a turbine.
 
+The original dataset columns are converted into standardized names using Satujan's `remap.py`.
+
 ```python
 {
-    "reading_id": "A-T3-2022-03-14T06:20",
+    "row_id": 1001,
     "turbine_id": "A-T3",
     "dataset_id": "A-68",
     "timestamp": "2022-03-14T06:20:00",
     "wind_speed_avg": 11.2,
     "wind_speed_max": 17.9,
     "wind_speed_std": 2.4,
-    "power_kw": 1830.0,
-    "rotor_rpm": 15.1,
+    "grid_power_avg": 1830.0,
+    "rotor_rpm_avg": 15.1,
     "ambient_temp": 9.5,
     "gearbox_bearing_temp": 64.2,
-    "generator_bearing_temp": 58.7,
-    "status": "normal"
+    "generator_bearing_1_temp": 58.7,
+    "generator_bearing_2_temp": 59.1,
+    "status_id": 1
 }
 ```
 
-All sensor names should follow SENSORS.md.
+All sensor names should follow `SENSORS.md` and `remap.py`.
 
 ## 2. Features Format
 
@@ -39,22 +41,28 @@ Function:
 def make_features(readings: pd.DataFrame) -> pd.DataFrame:
 ```
 
-Takes readings for one turbine, sorted by timestamp, and returns one row per reading_id.
+Takes readings for one turbine, sorted by timestamp, and returns one row per `row_id`.
 
 The features include:
 
-- wind_speed_avg
-- power_kw
-- ambient_temp
-- gust_factor (max / avg)
-- turbulence (std / avg)
-- wind_jump (change from last reading)
-- gusts_last_24h
-- gusts_last_7d
-- temp_1h_ago
-- hour_of_day
+- `wind_speed_avg`
+- `grid_power_avg`
+- `ambient_temp`
+- `gust_factor` (maximum / average wind speed)
+- `turbulence` (wind speed standard deviation / average wind speed)
+- `wind_jump` (change from the previous reading)
+- `gusts_last_24h`
+- `gusts_last_7d`
+- `temp_1h_ago`
+- `hour_of_day`
 
-The complete feature list is maintained in FEATURES.md.
+`gust_events` is a temporary variable used to calculate gust counts. It is 1 when `gust_factor >= 1.5`, 0 otherwise, and missing when gust factor is missing.
+
+Gust counts exclude the current reading. Empty windows return 0.
+
+`temp_1h_ago` uses `gearbox_bearing_temp.shift(6)` and is missing unless six readings span exactly one hour.
+
+The complete feature list is maintained in `FEATURES.md`.
 
 Output is saved as:
 
@@ -97,12 +105,14 @@ Predictions are saved as CSV files:
 
 Each CSV contains:
 
-- reading_id
-- actual
-- expected
-- residual
+- `row_id`
+- `actual`
+- `expected`
+- `residual`
 
 The Isolation Forest follows the same general structure but uses `predict_score()` instead of `predict()`.
+
+The model should distinguish between gearbox bearing, generator bearing 1, and generator bearing 2.
 
 ## 4. Explain Format
 
@@ -153,26 +163,20 @@ Expected output:
 
 ```python
 {
-    "reading_id": "A-T3-2022-03-14T06:20",
+    "row_id": 1001,
     "turbine_id": "A-T3",
     "timestamp": "2022-03-14T06:20:00",
     "health": "yellow",
     "health_score": 0.64,
     "residuals": {
         "gearbox_bearing": 6.1,
-        "generator_bearing": 1.2
+        "generator_bearing_1": 1.2,
+        "generator_bearing_2": 0.8
     },
     "anomaly_score": 0.58,
     "gusts_last_7d": 14,
-    "reasons": [
-        {
-            "part": "gearbox_bearing",
-            "residual_c": 6.1,
-            "hours": 72,
-            "text": "Gearbox bearing 6°C hotter than expected for 3 days"
-        }
-    ],
-    "sentence": "Gearbox bearing has run 6°C hotter than expected for 3 days, after a gusty week.",
+    "reasons": [],
+    "sentence": "Gearbox bearing has run hotter than expected.",
     "fault_event": "A-68",
     "days_to_fault": 5.3,
     "latency_ms": 120
@@ -190,6 +194,8 @@ Each result is written as one line in:
 `data/live/health.jsonl`
 
 The `fault_event` and `days_to_fault` fields are only used for dashboard display and evaluation. Models must never use them as inputs.
+
+The exact health-score calculation and classification thresholds will be agreed upon before final integration.
 
 ## General Rules
 

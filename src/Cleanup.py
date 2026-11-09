@@ -47,7 +47,7 @@ def make_features(df):
 
 
 #Dataset 0: Generator bearing fault Dataset 10: Gearbox Failure, Dataset 25: Healthy
-for dataset_name in ["0", "10", "25"]:
+for dataset_name in ["3", "13", "14", "17", "22", "24", "26", "38", "40", "42", "45", "51", "68", "69", "71", "72", "73", "84", "92"]:
     df = load_data("Data/datasets/" + dataset_name + ".csv")
     df = clean_data(df)
     df = make_features(df)

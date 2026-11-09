@@ -1,0 +1,4 @@
+dataset,model,part,readings,mae_c
+0,lgbm,gearbox_bearing_temp,2365,1.224351961326328
+10,lgbm,gearbox_bearing_temp,1268,1.0556122482317583
+25,lgbm,gearbox_bearing_temp,1942,0.687913830492896

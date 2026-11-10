@@ -1,0 +1,10 @@
+pandas
+numpy
+pyarrow
+lightgbm
+scikit-learn
+joblib
+streamlit
+plotly
+python-dotenv
+pytest

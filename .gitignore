@@ -222,3 +222,29 @@ __marimo__/
 
 #data
 /Data/datasets/.DS_Store
+
+# UpKeep project files
+
+# Raw datasets
+Data/raw/
+data/raw/
+data/datasets/
+
+# Saved models
+models_saved/
+**/models_saved/
+
+# Generated files
+predictions/
+*.pkl
+*.joblib
+
+# Local environment files
+.env.*
+!.env.example
+
+# macOS
+.DS_Store
+
+# Processed data
+data/processed/

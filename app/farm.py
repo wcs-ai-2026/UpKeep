@@ -1,3 +1,10 @@
+import sys
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PROJECT_ROOT / "src"))
+
+from upkeep.stubs import score_reading
 import streamlit as st
 import pandas as pd
 
@@ -10,13 +17,28 @@ st.set_page_config(
 
 # Simulated turbine data
 # This will be replaced with the team's data later
-turbines = [
-    {"id": "A-T1", "health": "green", "score": 0.96},
-    {"id": "A-T2", "health": "green", "score": 0.91},
-    {"id": "A-T3", "health": "yellow", "score": 0.64},
-    {"id": "A-T4", "health": "red", "score": 0.22},
-    {"id": "A-T5", "health": "green", "score": 0.89},
-]
+turbines = []
+
+for number in range(1, 6):
+    reading = {
+        "row_id": f"demo-{number}",
+        "turbine_id": f"A-T{number}",
+        "timestamp": "2026-11-13T12:00:00"
+    }
+
+  
+
+
+    result = score_reading(reading)
+
+   
+
+    turbines.append({
+        "id": result["turbine_id"],
+        "health": result["health"],
+        "score": result["health_score"]
+    })
+
 
 # Health status colours
 status_colors = {
@@ -117,7 +139,7 @@ st.dataframe(
         }
     ),
     hide_index=True,
-    use_container_width=True
+   width="stretch"
 )
 
 st.caption(

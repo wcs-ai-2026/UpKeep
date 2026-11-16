@@ -8,7 +8,7 @@ from lightgbm import LGBMRegressor
 
 class LightGBMNormalModel:
     def __init__(self):
-        self.model = LGBMRegressor(n_estimators=200, learning_rate=0.05, verbosity=-1)
+        self.model = LGBMRegressor(n_estimators=300, learning_rate=0.05, verbosity=-1, random_state=42)
         self.features = None
 
     # Training the model

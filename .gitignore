@@ -248,3 +248,7 @@ predictions/
 
 # Processed data
 data/processed/
+
+# Generated replay output (health.jsonl, eval/health_<dataset_id>.jsonl)
+data/live/
+Data/live/

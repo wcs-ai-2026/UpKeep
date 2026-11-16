@@ -1,9 +1,37 @@
 # Decisions
 
-- Nov 15, 2026 (Varun): Tried a few different settings for the LightGBM models
-  (more/fewer trees, different learning rates) and tested them the right way -
-  on the last 2 months of training data only, never touching the locked test
-  period. Honestly the difference between settings was pretty small either way
-  (under half a degree). Went with 300 trees instead of the old default of 200,
-  since it came out best or close to best on 3 of the 4 models. Updated this
-  in src/upkeep/models/lgbm_nbm.py.
+- Nov 15, 2026 (Varun, SCRUM-36): Tuned LightGBM settings on validation only
+  (last 2 months of each dataset's train split, per the plan - never touched
+  the locked test/prediction rows). Script: tune_lgbm_settings.py, full
+  results in tuning_results.csv (60 rows: 4 models x 3 datasets x 5 settings).
+
+  Chosen: n_estimators=300, learning_rate=0.05 (up from the old default of
+  200 estimators). Won or tied on 3 of 4 models; the 4th (generator_bearing_1)
+  was only ~0.04 degC worse, within noise. Validation MAE, averaged across
+  datasets 0/10/25, old default vs chosen:
+  - gearbox_bearing_temp: 0.824 -> 0.817
+  - generator_bearing_1_temp: 3.077 -> 3.122
+  - generator_bearing_2_temp: 3.438 -> 3.436
+  - gearbox_oil_temp: 1.199 -> 1.180
+
+  Note: the generator bearing models are still above the project's 2 degC
+  target even after tuning - tuning the settings barely moved these numbers,
+  so the bottleneck isn't the settings. Likely needs a better feature (e.g.
+  a generator-specific "temp 1h ago" instead of the gearbox-based one
+  currently in FEATURES.md) rather than more tuning. Flagging for the team,
+  not fixing in this ticket.
+
+- Nov 15, 2026 (Varun): Pinned requirements.txt to the exact library versions
+  tested (lightgbm 4.7.0, pandas 2.3.3, numpy 2.2.6, scikit-learn 1.7.2,
+  pyarrow 25.0.1, joblib 1.6.0), and added random_state=42 to the LightGBM
+  model so results are reproducible run to run on the same machine. Small
+  differences can still happen across different machines/thread counts -
+  pinning gets everyone close, not byte-for-byte identical.
+
+- Nov 15, 2026 (Varun): Training scripts now drop any row with a missing
+  target value before fitting or predicting (found 1 missing
+  generator_bearing_1_temp reading in datasets 0 and 10) instead of silently
+  including it. Predictions CSVs now include a "split" column (train vs.
+  prediction) so train and test rows can be told apart. Removed the
+  held-out MAE printing from the training scripts - evaluation is
+  run_eval.py's job, not the training script's.

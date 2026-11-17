@@ -1,0 +1,13 @@
+target,dataset,period,n_rows,mae
+generator_bearing_1_temp,0,healthy,158,1.5997994422746948
+generator_bearing_1_temp,0,fault,2207,2.2755604532450775
+generator_bearing_1_temp,10,healthy,288,2.6009977085398606
+generator_bearing_1_temp,10,fault,980,3.632043038470234
+generator_bearing_1_temp,25,healthy,1942,4.0264751317739105
+generator_bearing_1_temp,25,fault,0,
+generator_bearing_2_temp,0,healthy,158,1.5608973704721343
+generator_bearing_2_temp,0,fault,2207,6.8894763666255185
+generator_bearing_2_temp,10,healthy,288,1.5558416303034097
+generator_bearing_2_temp,10,fault,980,2.227313883789752
+generator_bearing_2_temp,25,healthy,1942,3.339546430078232
+generator_bearing_2_temp,25,fault,0,

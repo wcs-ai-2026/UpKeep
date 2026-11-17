@@ -11,12 +11,10 @@ events = pd.read_csv("Data/event_info.csv", sep=";").set_index("event_id")
 rows = []
 for target in TARGETS:
     for dataset in DATASETS:
-        df = pd.read_csv(f"Data/cln/{dataset}_cln.csv", sep=";")
         pred = pd.read_csv(f"predictions/lgbm_{target}_{dataset}.csv")
+        pred = pred.rename(columns={"reading_id": "row_id"})
 
         # Keeping only the held-out test rows.
-        pred = pred.rename(columns={"reading_id": "row_id"})
-        pred = pred.merge(df[["row_id", "split"]], on="row_id", how="left")
         test = pred[pred["split"] == "prediction"].copy()
 
         # Working out which rows are healthy vs during a fault.

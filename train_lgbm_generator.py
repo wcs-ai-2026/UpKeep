@@ -12,6 +12,12 @@ DATASETS = ["0", "10", "25"]
 for target in TARGETS:
     for dataset in DATASETS:
         df = pd.read_csv(f"Data/cln/{dataset}_cln.csv", sep=";")
+
+        # Dropping rows with no real target value - never fit or predict on a made-up number.
+        before = len(df)
+        df = df.dropna(subset=[target])
+        dropped = before - len(df)
+
         train = df[df["split"] == "train"]
 
         # Calling Lightgbm model
@@ -23,6 +29,7 @@ for target in TARGETS:
         pred = model.predict(df[FEATURES])
         out = pd.DataFrame({
             "reading_id": df["row_id"],
+            "split": df["split"],
             "actual": df[target],
             "expected": pred,
             "residual": df[target] - pred,
@@ -31,7 +38,4 @@ for target in TARGETS:
         # Storing result into a CSV file.
         out.to_csv(f"predictions/lgbm_{target}_{dataset}.csv", index=False)
 
-        # Testing all the predictions.
-        test = df[df["split"] == "prediction"]
-        test_mae = (test[target] - model.predict(test[FEATURES])).abs().mean() if len(test) else float("nan")
-        print(f"{target} | Dataset {dataset}: held-out MAE = {test_mae:.3f} degC")
+        print(f"{target} | Dataset {dataset}: trained on {len(train)} rows, dropped {dropped} missing-target row(s), wrote {len(out)} predictions")

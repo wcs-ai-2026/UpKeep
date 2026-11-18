@@ -1,0 +1,12 @@
+dataset_id,turbine_id,fault_type,fault_timestamp,event_start_id
+A-0,A-T0,Generator bearing failure,2022-08-05 06:10:00,52436
+A-10,A-T10,Gearbox failure,2014-10-12 08:40:00,52611
+A-22,A-T21,Hydraulic group,2021-08-11 09:50:00,51888
+A-26,A-T0,Hydraulic group,2020-10-11 10:20:00,52261
+A-40,A-T10,Generator bearing failure,2022-12-24 00:00:00,51363
+A-42,A-T10,Hydraulic group,2023-09-08 15:50:00,52303
+A-45,A-T13,Hydraulic group,2020-04-18 18:10:00,52731
+A-68,A-T11,Transformer failure,2015-07-29 13:20:00,52063
+A-72,A-T21,Gearbox failure,2021-10-09 08:40:00,52497
+A-73,A-T0,Hydraulic group,2023-06-09 11:40:00,52745
+A-84,A-T13,Hydraulic group,2022-09-04 15:30:00,52623

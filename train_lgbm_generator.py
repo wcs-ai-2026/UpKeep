@@ -3,15 +3,21 @@ import sys
 sys.path.insert(0, "src/upkeep/models")
 from lgbm_nbm import LightGBMNormalModel
 
-# Storing all the required features.
-FEATURES = ["wind_speed_avg", "grid_power_avg", "ambient_temp", "gust_factor", "turbulence", "wind_jump", "gusts_last_24h", "gusts_last_7d", "temp_1h_ago", "hour_of_day"]
+# Storing the shared features. Each target gets its own lag feature below,
+# instead of temp_1h_ago, since that one is actually the gearbox's temperature.
+BASE_FEATURES = ["wind_speed_avg", "grid_power_avg", "ambient_temp", "gust_factor", "turbulence", "wind_jump", "gusts_last_24h", "gusts_last_7d", "hour_of_day"]
 TARGETS = ["generator_bearing_1_temp", "generator_bearing_2_temp"]
 DATASETS = ["0", "10", "25"]
 
 # Looping through each target and dataset.
 for target in TARGETS:
+    lag_feature = f"{target}_1h_ago"
+    FEATURES = BASE_FEATURES + [lag_feature]
+
     for dataset in DATASETS:
-        df = pd.read_csv(f"Data/cln/{dataset}_cln.csv", sep=";")
+        readings = pd.read_csv(f"Data/cln/{dataset}_cln.csv", sep=";")
+        feats = pd.read_parquet(f"data/processed/features_{dataset}.parquet")
+        df = readings[["row_id", "split", target]].merge(feats, on="row_id")
 
         # Dropping rows with no real target value - never fit or predict on a made-up number.
         before = len(df)

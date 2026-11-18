@@ -1,0 +1,12 @@
+dataset_id,turbine_id,fault_type,fault_timestamp,replay_fault_timestamp,window_days,eligible_readings,scored_readings,warning_detected,first_warning_timestamp,first_warning_health,lead_time_hours,status
+A-0,A-T0,Generator bearing failure,2022-08-05 06:10:00,2023-08-05 06:10:00,7.0,158,73,,,,,partial_predictions
+A-10,A-T10,Gearbox failure,2014-10-12 08:40:00,2023-10-12 08:40:00,7.0,288,288,False,,,,complete
+A-22,A-T21,Hydraulic group,2021-08-11 09:50:00,2023-08-11 09:50:00,7.0,0,0,,,,,no_held_out_readings
+A-26,A-T0,Hydraulic group,2020-10-11 10:20:00,2023-10-11 10:20:00,7.0,0,0,,,,,no_held_out_readings
+A-40,A-T10,Generator bearing failure,2022-12-24 00:00:00,2023-12-24 00:00:00,7.0,143,137,,,,,partial_predictions
+A-42,A-T10,Hydraulic group,2023-09-08 15:50:00,2023-09-08 15:50:00,7.0,0,0,,,,,no_held_out_readings
+A-45,A-T13,Hydraulic group,2020-04-18 18:10:00,,7.0,0,0,,,,,no_held_out_readings
+A-68,A-T11,Transformer failure,2015-07-29 13:20:00,2023-07-29 13:20:00,7.0,0,0,,,,,no_held_out_readings
+A-72,A-T21,Gearbox failure,2021-10-09 08:40:00,2023-10-09 08:40:00,7.0,432,432,False,,,,complete
+A-73,A-T0,Hydraulic group,2023-06-09 11:40:00,2023-06-09 11:40:00,7.0,432,432,True,2023-06-06 23:30:00,yellow,60.167,complete
+A-84,A-T13,Hydraulic group,2022-09-04 15:30:00,,7.0,0,0,,,,,no_held_out_readings

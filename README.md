@@ -93,6 +93,26 @@ The team also uses a smaller seed sample in `data/seed/` so development can begi
 
 Do not upload the raw dataset to GitHub.
 
+## Evaluating advance warnings
+
+Run `python src/run_eval.py` to write `eval_results.csv` and one row per Farm A
+fault to `fault_eval_results.csv`. The fault list in `Data/fault_events.csv`
+combines dates and fault types from `Data/event_info.csv` with turbine IDs
+from the cleaned datasets. Eval uses the event's start row ID to align its
+source date with the replay timeline.
+
+The warning report reads `Data/live/eval/health_<dataset_id>.jsonl` from replay
+in evaluation mode with the prediction split. Use `--health-dir` for a
+different replay output directory. The default window starts seven days
+before the fault and ends just before the fault starts. Set `--window-days`
+to change it. The first yellow or red reading in that window determines the
+lead time. The report leaves the warning result blank when coverage is
+incomplete and no warning was observed. The eligible and scored reading
+counts show coverage within the available held-out data.
+
+The included report is a preview from linear models fitted on the training
+split, using the existing noise calibration and provisional health thresholds.
+
 ## Project structure
 
 ```text

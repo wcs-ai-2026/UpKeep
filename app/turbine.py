@@ -102,11 +102,21 @@ st.caption("Actual vs Expected Gearbox Bearing Temperature")
 
 st.divider()
 
-# Dataset selection
-dataset = st.selectbox(
-    "Select Dataset",
-    list(DATASETS.keys())
+# Turbine selection
+TURBINE_DATASETS = {
+    0: "0",
+    10: "10",
+    11: "25"
+}
+
+selected_turbine = st.selectbox(
+    "Select Turbine",
+    list(TURBINE_DATASETS.keys()),
+    format_func=lambda turbine: f"Turbine {turbine}"
 )
+
+dataset = TURBINE_DATASETS[selected_turbine]
+
 
 try:
     df = load_data(dataset)
@@ -114,17 +124,7 @@ except Exception as error:
     st.error(f"Unable to load turbine data: {error}")
     st.stop()
 
-# Turbine selection
-turbines = sorted(df["turbine_id"].dropna().unique())
 
-if len(turbines) == 0:
-    st.warning("No turbines found in the selected dataset.")
-    st.stop()
-
-selected_turbine = st.selectbox(
-    "Select Turbine",
-    turbines
-)
 
 turbine_data = df[
     df["turbine_id"] == selected_turbine

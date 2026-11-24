@@ -35,3 +35,20 @@
   prediction) so train and test rows can be told apart. Removed the
   held-out MAE printing from the training scripts - evaluation is
   run_eval.py's job, not the training script's.
+
+- Nov 24, 2026 (Varun, lock final models): Locked the final model versions
+  for the summit. All saved models uploaded to the shared Drive folder
+  (models_saved/, which stays out of git on purpose).
+
+  LightGBM settings: n_estimators=300, learning_rate=0.05, random_state=42
+  (the Nov 15 tuning decision above), trained with the generator-specific
+  lag feature fix (generator_bearing_1_temp_1h_ago,
+  generator_bearing_2_temp_1h_ago) from SCRUM-35.
+
+  Isolation Forest settings: n_estimators=200, random_state=42, scores
+  calibrated to a 0 to 1 range using the 1st and 99th percentile of the
+  training residuals.
+
+  15 files total, covering datasets 0, 10 and 25: 3 gearbox bearing, 3
+  gearbox oil (bonus), 3 generator bearing 1, 3 generator bearing 2, 3
+  Isolation Forest.
